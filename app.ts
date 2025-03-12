@@ -1,11 +1,21 @@
-let info: object = {
-    officeId: 45,
-    isOpened: false,
+let info: {
+    officeId: number,
+    isOpened: boolean,
     contacts: {
-        phone: "+79100000000",
-        email: "my@email.ru",
+        phone: string,
+        email: string,
         address: {
-            city: "Москва"
+            city:string
+        }
+    }
+} = {
+    "officeId": 45,
+    "isOpened": false,
+    "contacts": {
+        "phone": "+79100000000",
+        "email": "my@email.ru",
+        "address": {
+            "city": "Москва"
         }
     }
 };
