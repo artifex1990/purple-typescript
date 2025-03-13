@@ -1,9 +1,23 @@
-function fetchWithAuth(url: string, method: 'post' | 'get'): 1 | -1 {
-    return 1;
+type User = {
+    name: string,
+    age: number,
+    skills: string[]
+};
+
+type Role = {
+    id: number,
+    name: string
 }
 
-fetchWithAuth('users', 'post');
+type UserWithRole = User & Role;
+type UserWithRoleComposition = {
+    user: User,
+    role: Role
+};
 
-let method = 'post';
-
-fetchWithAuth('users', method as 'post');
+let user: UserWithRole = {
+    name: "John",
+    age: 30,
+    skills: ['1', '2'],
+    id: 1
+}
