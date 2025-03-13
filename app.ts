@@ -1,30 +1,49 @@
-interface User {
-    login: string;
-    password?: string;
+enum PaymentStatus {
+    SUCCESS = "success",
+    FAILED = "failed"
 }
 
-const user: User = {
-    login: 'a@a.ru',
-    password: '1',
+interface IPayment {
+    sum: number;
+    from: number;
+    to: number;
 }
 
-function multiple(first: number, second?: number): number {
-    return second ? first * second : first  * first;
+interface IPaymentsRequest extends IPayment {}
+
+interface IFailedData {
+    errorMessage: string,
+    errorCode: number
 }
 
-console.log(multiple(2,3));
-
-interface UserPro {
-    login: string;
-    password?: {
-        type: 'primary' | 'secondary';
-    }
+interface ISuccessData extends IPaymentsRequest {
+    databaseId: number;
 }
 
-function testPass(user: UserPro) {
-    const t = user.password?.type;
+interface IResponseSuccess {
+    status: PaymentStatus,
+    data: ISuccessData
 }
 
-function test(param?: string) {
-    const t = param ?? multiple(5);
+interface IResponseFailed {
+    status: PaymentStatus,
+    data: IFailedData
+}
+
+async function payment(request: IPaymentsRequest): Promise<IResponseSuccess | IResponseFailed> {
+    return new Promise((resolve, reject) => {
+        try {
+            const success: IResponseSuccess = {
+                status: PaymentStatus.SUCCESS,
+                data: {
+                    databaseId: 1,
+                    ...request
+                }
+            }
+
+            resolve(success);
+        } catch (error) {
+            return reject(error);
+        }
+    });
 }
