@@ -1,49 +1,26 @@
-enum PaymentStatus {
-    SUCCESS = "success",
-    FAILED = "failed"
+function logId(id: string | number): void {
+    console.log(id);
 }
 
-interface IPayment {
-    sum: number;
-    from: number;
-    to: number;
+const a = logId(1);
+
+function multiple(f: number, s?: number): void | number {
+    if (!s) {
+        return f * f;
+    }
 }
 
-interface IPaymentsRequest extends IPayment {}
+type voidFunction = () => void;
 
-interface IDataFailed {
-    errorMessage: string,
-    errorCode: number
-}
+const f1: voidFunction = () => {};
+const f2: voidFunction = () => {
+    return true;
+};
+const b = f2();
 
-interface IDataSuccess extends IPayment {
-    databaseId: number;
-}
+const skills = ['Dev', 'DevOps'];
+const user = {
+    s: ['s']
+};
 
-interface IResponseSuccess {
-    status: PaymentStatus.SUCCESS,
-    data: IDataSuccess
-}
-
-interface IResponseFailed {
-    status: PaymentStatus.FAILED,
-    data: IDataFailed
-}
-
-async function payment(request: IPaymentsRequest): Promise<IResponseSuccess | IResponseFailed> {
-    return new Promise((resolve, reject) => {
-        try {
-            const success: IResponseSuccess = {
-                status: PaymentStatus.SUCCESS,
-                data: {
-                    databaseId: 1,
-                    ...request
-                }
-            }
-
-            resolve(success);
-        } catch (error) {
-            return reject(error);
-        }
-    });
-}
+skills.forEach((skill) => user.s.push(skill));
