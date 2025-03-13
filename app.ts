@@ -1,19 +1,19 @@
+enum QuestionStatus {
+    Published = 'published',
+    Draft = 'draft',
+    Deleted = 'deleted'
+}
 
-
-let request: {
+async function getFaqs(req: {
     topicId: number,
-    status: string | undefined
-};
-
-let response: [{
+    status?: QuestionStatus
+}): Promise<{
     question: string,
     answer: string,
     tags: string[],
     likes: number,
-    status: string
-}];
-
-async function getFaqs(req: typeof request): Promise<typeof response> {
+    status: QuestionStatus
+}[]> {
     const res = await fetch('/faqs', {
         method: 'POST',
         body: JSON.stringify(req)
