@@ -1,23 +1,7 @@
 "use strict";
-function logId(id) {
-    if (typeof id === 'string') {
-        console.log(id);
-    }
-    else if (typeof id === 'number') {
-        console.log(id);
-    }
-    else {
-        console.log(id);
-    }
+function fetchWithAuth(url, method) {
+    return 1;
 }
-function logError(err) {
-    if (Array.isArray(err)) {
-        console.log(err);
-    }
-    else {
-        console.log(err);
-    }
-}
-logId(1);
-logId('1fsdf');
-logId(true);
+fetchWithAuth('users', 'post');
+let method = 'post';
+fetchWithAuth('users', method);
