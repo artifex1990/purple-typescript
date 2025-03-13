@@ -1,23 +1,23 @@
-enum StatusCode {
-    SUCCESS = 1,
-    IN_PROCESS,
-    FAILED
+
+
+let request: {
+    topicId: number,
+    status: string | undefined
+};
+
+let response: [{
+    question: string,
+    answer: string,
+    tags: string[],
+    likes: number,
+    status: string
+}];
+
+async function getFaqs(req: typeof request): Promise<typeof response> {
+    const res = await fetch('/faqs', {
+        method: 'POST',
+        body: JSON.stringify(req)
+    });
+    const data = await res.json();
+    return data;
 }
-
-const res = {
-    message: "Платёж успешен",
-    statusCode: StatusCode.SUCCESS
-}
-
-if (res.statusCode === StatusCode.SUCCESS) {}
-
-function action(status: StatusCode) {
-
-}
-
-const enum Roles {
-    ADMIN = 1,
-    USER = 2
-}
-
-const userRole = Roles.ADMIN;
