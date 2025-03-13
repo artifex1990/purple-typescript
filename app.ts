@@ -11,23 +11,23 @@ interface IPayment {
 
 interface IPaymentsRequest extends IPayment {}
 
-interface IFailedData {
+interface IDataFailed {
     errorMessage: string,
     errorCode: number
 }
 
-interface ISuccessData extends IPaymentsRequest {
+interface IDataSuccess extends IPayment {
     databaseId: number;
 }
 
 interface IResponseSuccess {
-    status: PaymentStatus,
-    data: ISuccessData
+    status: PaymentStatus.SUCCESS,
+    data: IDataSuccess
 }
 
 interface IResponseFailed {
-    status: PaymentStatus,
-    data: IFailedData
+    status: PaymentStatus.FAILED,
+    data: IDataFailed
 }
 
 async function payment(request: IPaymentsRequest): Promise<IResponseSuccess | IResponseFailed> {
