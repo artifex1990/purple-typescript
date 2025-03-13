@@ -1,37 +1,40 @@
-let input: unknown;
+function generateError(message: string): never {
+    throw new Error(message);
+}
 
-input = 10;
-input = ['sf', 'sdf'];
+function dumpError(): never {
+    while(true){}
+}
 
-function run(i: unknown) {
-    if (typeof i === 'number') {
-        i++;
-    } else {
-        console.log(i);
+function rec(): never {
+    return rec();
+}
+
+type paymentActon = 'refunds' | 'checkout' | 'reject';
+
+function processAction(action: paymentActon) {
+    switch(action) {
+        case 'refunds':
+            //...
+            break;
+        case 'checkout':
+            //...
+            break;
+        case 'reject':
+            //...
+            break;
+        default:
+            const _: never = action;
+            throw new Error('Invalid action');
     }
 }
 
-run(input);
 
-async function getData() {
-    try {
-        await fetch('');
-    } catch (error) {
-        if (error instanceof Error) {
-            console.log(error.message);
-        }
+function setTypeToBoolean(x: string | number): boolean {
+    if (typeof x === 'string') {
+        return true;
+    } else if (typeof x === 'number') {
+        return false;
     }
+    generateError('fsdfdsf');
 }
-
-async function getDataForce() {
-    try {
-        await fetch('');
-    } catch (error) {
-        const e = error as Error;
-        console.log(e.message);
-    }
-}
-
-type U1 = unknown | number;
-
-type I1 = unknown & string;
