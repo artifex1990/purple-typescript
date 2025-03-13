@@ -13,4 +13,8 @@ const f2 = () => {
     return true;
 };
 const b = f2();
-console.log(b);
+const skills = ['Dev', 'DevOps'];
+const user = {
+    s: ['s']
+};
+skills.forEach((skill) => user.s.push(skill));
