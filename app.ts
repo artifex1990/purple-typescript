@@ -1,40 +1,25 @@
-function generateError(message: string): never {
-    throw new Error(message);
+const n: null = null;
+const n1: any = null;
+const n2: number = null;
+const n3: string = null;
+const n4: boolean = null;
+const n5: undefined = null;
+
+interface User {
+    name: string;
 }
 
-function dumpError(): never {
-    while(true){}
-}
-
-function rec(): never {
-    return rec();
-}
-
-type paymentActon = 'refunds' | 'checkout' | 'reject';
-
-function processAction(action: paymentActon) {
-    switch(action) {
-        case 'refunds':
-            //...
-            break;
-        case 'checkout':
-            //...
-            break;
-        case 'reject':
-            //...
-            break;
-        default:
-            const _: never = action;
-            throw new Error('Invalid action');
+function getUser() {
+    if (Math.random() > 0.5) {
+        return null;
+    } else {
+        return {
+            name: 'jack'
+        } as User
     }
 }
 
-
-function setTypeToBoolean(x: string | number): boolean {
-    if (typeof x === 'string') {
-        return true;
-    } else if (typeof x === 'number') {
-        return false;
-    }
-    generateError('fsdfdsf');
+const user = getUser();
+if (user) {
+    const n55 = user?.name;
 }
