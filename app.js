@@ -1,10 +1,15 @@
 "use strict";
 class User {
-    addSkill(skill) {
-        if (Array.isArray(skill)) {
-            this.skills.push(...skill);
-            return;
+    addSkill(skillOrSkills) {
+        if (typeof skillOrSkills === 'string') {
+            this.skills.push(skillOrSkills);
         }
-        this.skills.push(skill);
+        else {
+            this.skills.concat(skillOrSkills);
+        }
     }
 }
+function run(distance) {
+    return typeof distance === 'number' ? distance : `${distance} метров`;
+}
+run(123);

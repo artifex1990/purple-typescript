@@ -2,13 +2,20 @@ class User {
     skills: string[];
 
     addSkill(skill: string): void;
-    addSkill(skill: string[]): void;
-    addSkill(skill: string | string[]): void {
-        if (Array.isArray(skill)) {
-            this.skills.push(...skill);
-            return;
+    addSkill(skills: string[]): void;
+    addSkill(skillOrSkills: string | string[]): void {
+        if (typeof skillOrSkills === 'string') {
+            this.skills.push(skillOrSkills);
+        } else {
+            this.skills.concat(skillOrSkills);
         }
-
-        this.skills.push(skill);
     }
 }
+
+function run(distance: number): number;
+function run(distance: string): string;
+function run(distance: number | string): number | string {
+    return typeof distance === 'number' ? distance : `${distance} метров`;
+}
+
+run(123);   
