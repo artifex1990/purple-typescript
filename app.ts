@@ -1,51 +1,17 @@
-interface IPayment {
-    sum: number;
-    from: number;
-    to: number;
+interface User {
+    name: string;
 }
 
-enum PaymentStatus {
-    Success = 'success',
-    Failed = 'failed',
-}
+const a = {};
 
-interface IPaymentRequest extends IPayment { }
+assertUser(a)
+ a.name = 'Вася';
 
-interface IDataSuccess extends IPayment {
-    databaseId: number;
-}
 
-interface IDataFailed {
-    errorMessage: string;
-    errorCode: number;
-}
-
-interface IResponseSuccess {
-    status: PaymentStatus.Success;
-    data: IDataSuccess;
-}
-
-interface IResponseFailed {
-    status: PaymentStatus.Failed;
-    data: IDataFailed;
-}
-
-type f = (res: IResponseSuccess | IResponseFailed) => number;
-
-type Res = IResponseSuccess | IResponseFailed;
-
-function isSuccess(res: Res): res is IResponseSuccess {
-    if (res.status === PaymentStatus.Success) {
-        return true;
+function assertUser(obj: unknown): asserts obj is User {
+    if (typeof obj === 'object' && !!obj && 'name' in obj) {
+        return;
     }
 
-    return false;
-}
-
-function getIdFromData(res: Res): number {
-    if (isSuccess(res)) {
-        return res.data.databaseId;
-    } else {
-        return res.data.errorCode;
-    }
+    throw new Error('Не пользователь');
 }
