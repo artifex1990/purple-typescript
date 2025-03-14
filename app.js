@@ -1,18 +1,31 @@
 "use strict";
-class User {
-    constructor(name) {
-        this.name = name;
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var _Vehicle_price;
+class Vehicle {
+    constructor() {
+        _Vehicle_price.set(this, void 0);
+    }
+    set model(m) {
+        this._model = m;
+        __classPrivateFieldSet(this, _Vehicle_price, 100, "f");
+    }
+    get model() {
+        return this._model;
+    }
+    addDamage(damage) {
+        this.damages.push(damage);
     }
 }
-class Users extends Array {
-    searchByName(name) {
-        return this.find(user => user.name === name);
-    }
-    toString() {
-        return this.map(user => user.name).join(", ");
+_Vehicle_price = new WeakMap();
+class EuroTruck extends Vehicle {
+    setRun(km) {
+        this.run = km / 0.62;
     }
 }
-const users = new Users();
-users.push(new User("Vasya"));
-users.push(new User("Petya"));
-console.log(users.toString());
+new Vehicle().make = 'Ford';
+new EuroTruck();
