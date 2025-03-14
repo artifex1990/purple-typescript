@@ -1,67 +1,57 @@
-type PaymentStatus = 'new' | 'paid';
-class Payment {
-    id: number;
-    status: PaymentStatus = 'new';
-
-    constructor(id: number) {
-        this.id = id;
-    }
-
-    pay() {
-        this.status = 'paid';
-    }
-}
-
-class PersistedPayment extends Payment {
-    databaseId: number;
-    paidAt: Date;
-
-    constructor() {
-        const id = Math.random();
-        super(id);
-    }
-
-    save() {
-
-    }
-
-    override pay(date?: Date) {
-        super.pay();
-        if (date) {
-            this.paidAt = date;
-        }
-
-    }
-}
-
-new PersistedPayment();
-
 class User {
-    name: string = 'user';
+    name: string;
 
-    constructor() {
-        console.log(this.name);
+    constructor(name: string) {
+        this.name = name;
     }
 }
 
-class Admin extends User {
-    name: string = 'admin';
+class Users extends Array<User> {
+    searchByName(name: string) {
+        return this.find(user => user.name === name);
+    }
 
-    constructor() {
-        super();
-        console.log(this.name);
+    override toString(): string {
+        return this.map(user => user.name).join(", ");
     }
 }
 
-new Admin();
 
-// new Error('');
+const users = new Users();
+users.push(new User("Vasya"));
+users.push(new User("Petya"));
+console.log(users.toString());
 
-class HttpError extends Error {
-    code: number;
+class UserList {
+    users: User[];
 
-    constructor(message: string, code?: number) {
-        super(message);
-        this.code = code ?? 500;
+    push(user: User) {
+        this.users.push(user);
+    }
+
+    constructor(users: User[]) {
+        this.users = users;
+    }
+
+    searchByName(name: string) {
+        return this.users.find(user => user.name === name);
+    }
+}
+
+class Payment {
+    date: Date;
+}
+
+class UserWithPayment extends Payment {
+    name: string;
+}
+
+class UsersWithPayment2 {
+    user: User;
+    payment: Payment;
+
+    constructor(user: User, payment: Payment) {
+        this.user = user;
+        this.payment = payment;
     }
 }
