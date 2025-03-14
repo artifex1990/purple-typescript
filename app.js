@@ -1,22 +1,11 @@
 "use strict";
-var PaymentStatus;
-(function (PaymentStatus) {
-    PaymentStatus["Success"] = "success";
-    PaymentStatus["Failed"] = "failed";
-})(PaymentStatus || (PaymentStatus = {}));
-function isFailed(res) {
-    return res.status === PaymentStatus.Failed;
-}
-function isSuccess(res) {
-    return res.status === PaymentStatus.Success;
-}
-const fun = (res) => {
-    switch (res.status) {
-        case PaymentStatus.Success:
-            return res.data.databaseId;
-        case PaymentStatus.Failed:
-            console.log(res.data.errorMessage);
-            return res.data.errorCode;
+var User = /** @class */ (function () {
+    function User(name) {
+        this.name = name;
     }
-};
-fun({ status: PaymentStatus.Failed, data: { errorCode: 400, errorMessage: 'error' } });
+    return User;
+}());
+var user = new User('John Doe');
+console.log(user);
+user.name = 'Jane Doe 2';
+console.log(user);
