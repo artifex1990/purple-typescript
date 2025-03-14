@@ -32,21 +32,20 @@ interface IResponseFailed {
 
 type f = (res: IResponseSuccess | IResponseFailed) => number;
 
-function isFailed(res: IResponseSuccess | IResponseFailed): res is IResponseFailed {
-    return res.status === PaymentStatus.Failed;
-}
-function isSuccess(res: IResponseSuccess | IResponseFailed): res is IResponseSuccess {
-    return res.status === PaymentStatus.Success;
+type Res = IResponseSuccess | IResponseFailed;
+
+function isSuccess(res: Res): res is IResponseSuccess {
+    if (res.status === PaymentStatus.Success) {
+        return true;
+    }
+
+    return false;
 }
 
-const fun: f = (res: IResponseSuccess | IResponseFailed): number => {
-    switch (res.status) {
-        case PaymentStatus.Success: 
-            return res.data.databaseId;
-        case PaymentStatus.Failed: 
-            console.log(res.data.errorMessage);
-            return res.data.errorCode;
+function getIdFromData(res: Res): number {
+    if (isSuccess(res)) {
+        return res.data.databaseId;
+    } else {
+        return res.data.errorCode;
     }
 }
-
-fun({status: PaymentStatus.Failed, data: {errorCode: 400, errorMessage: 'error'}} as IResponseSuccess | IResponseFailed);
