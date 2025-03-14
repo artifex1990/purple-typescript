@@ -1,18 +1,29 @@
 "use strict";
-class User {
-    constructor(ageOrName, age) {
-        if (typeof ageOrName === 'string') {
-            this.name = ageOrName;
+var PaymentStatus;
+(function (PaymentStatus) {
+    PaymentStatus[PaymentStatus["Holded"] = 0] = "Holded";
+    PaymentStatus[PaymentStatus["Processed"] = 1] = "Processed";
+    PaymentStatus[PaymentStatus["Revers"] = 2] = "Revers";
+})(PaymentStatus || (PaymentStatus = {}));
+class Payment {
+    constructor(id) {
+        this.id = id;
+        this.createdAt = new Date();
+        this.status = PaymentStatus.Holded;
+    }
+    getPaymentLifeTime() {
+        return new Date().getTime() - this.createdAt.getTime();
+    }
+    unholdPayment() {
+        if (this.status == PaymentStatus.Processed) {
+            throw new Error("Платёж не может быть возвращен!");
         }
-        else if (typeof ageOrName === 'number') {
-            this.age = ageOrName;
-        }
-        if (typeof age === 'number') {
-            this.age = age;
-        }
+        this.status = PaymentStatus.Revers;
+        this.updatedAt = new Date();
     }
 }
-const user = new User('John Doe');
-const user2 = new User();
-const user3 = new User(33);
-const user4 = new User('VASYA', 33);
+const payment = new Payment(1);
+payment.unholdPayment();
+console.log(payment);
+const time = payment.getPaymentLifeTime();
+console.log(time);
