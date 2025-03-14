@@ -1,21 +1,22 @@
 class User {
-    skills: string[];
+    _login: string;
+    password: string;
+    createdAt: Date;
 
-    addSkill(skill: string): void;
-    addSkill(skills: string[]): void;
-    addSkill(skillOrSkills: string | string[]): void {
-        if (typeof skillOrSkills === 'string') {
-            this.skills.push(skillOrSkills);
-        } else {
-            this.skills.concat(skillOrSkills);
-        }
+    set login(l: string | number) {
+        this._login = 'user-' + l;
+        this.createdAt = new Date();
+    }
+
+    get login(): string {
+        return this._login;
+    }
+
+    async getPassword(p: string) {
+
     }
 }
 
-function run(distance: number): number;
-function run(distance: string): string;
-function run(distance: number | string): number | string {
-    return typeof distance === 'number' ? distance : `${distance} метров`;
-}
-
-run(123);   
+const user = new User();
+user.login = 'myLogin';
+console.log(user);
