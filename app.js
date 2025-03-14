@@ -1,20 +1,22 @@
 "use strict";
-function logId(id) {
-    console.log(id);
+var PaymentStatus;
+(function (PaymentStatus) {
+    PaymentStatus["Success"] = "success";
+    PaymentStatus["Failed"] = "failed";
+})(PaymentStatus || (PaymentStatus = {}));
+function isFailed(res) {
+    return res.status === PaymentStatus.Failed;
 }
-const a = logId(1);
-function multiple(f, s) {
-    if (!s) {
-        return f * f;
+function isSuccess(res) {
+    return res.status === PaymentStatus.Success;
+}
+const fun = (res) => {
+    switch (res.status) {
+        case PaymentStatus.Success:
+            return res.data.databaseId;
+        case PaymentStatus.Failed:
+            console.log(res.data.errorMessage);
+            return res.data.errorCode;
     }
-}
-const f1 = () => { };
-const f2 = () => {
-    return true;
 };
-const b = f2();
-const skills = ['Dev', 'DevOps'];
-const user = {
-    s: ['s']
-};
-skills.forEach((skill) => user.s.push(skill));
+fun({ status: PaymentStatus.Failed, data: { errorCode: 400, errorMessage: 'error' } });

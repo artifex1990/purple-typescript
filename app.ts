@@ -1,52 +1,52 @@
-let a = 5;
-let b: string = a.toString();
-let e = new String(a).valueOf();
-let f = new Boolean(a).valueOf();
-
-let c = 'adf';
-let d: number = parseInt(c);
-
-interface User {
-    name: string;
-    email: string;
-    login: string;
+interface IPayment {
+    sum: number;
+    from: number;
+    to: number;
 }
 
-const user: User = {
-    name: 'Владилен',
-    email: 'vladilen@mail.ru',
-    login: 'vladilen'
+enum PaymentStatus {
+    Success = 'success',
+    Failed = 'failed',
 }
 
-interface Admin {
-    name: string;
-    role: number;
+interface IPaymentRequest extends IPayment { }
+
+interface IDataSuccess extends IPayment {
+    databaseId: number;
 }
 
-function logId(id: string | number) {
-    if (isString(id)) {
-        console.log(id);
-    } else {
-        console.log(id);
+interface IDataFailed {
+    errorMessage: string;
+    errorCode: number;
+}
+
+interface IResponseSuccess {
+    status: PaymentStatus.Success;
+    data: IDataSuccess;
+}
+
+interface IResponseFailed {
+    status: PaymentStatus.Failed;
+    data: IDataFailed;
+}
+
+type f = (res: IResponseSuccess | IResponseFailed) => number;
+
+function isFailed(res: IResponseSuccess | IResponseFailed): res is IResponseFailed {
+    return res.status === PaymentStatus.Failed;
+}
+function isSuccess(res: IResponseSuccess | IResponseFailed): res is IResponseSuccess {
+    return res.status === PaymentStatus.Success;
+}
+
+const fun: f = (res: IResponseSuccess | IResponseFailed): number => {
+    switch (res.status) {
+        case PaymentStatus.Success: 
+            return res.data.databaseId;
+        case PaymentStatus.Failed: 
+            console.log(res.data.errorMessage);
+            return res.data.errorCode;
     }
 }
 
-function isString(x: string | number): x is string {
-    return typeof x === 'string';
-}
-
-function isAdmin(user: User | Admin): user is Admin {
-    return 'role' in user;
-}
-
-function isAdminAlt(user: User | Admin): user is Admin {
-    return (user as Admin).role !== undefined;
-}
-
-function setRole(user: User | Admin) {
-    if (isAdmin(user)) {
-        user.role = 0;
-    } else {
-        throw new Error('Пользователь не админ!');
-    }
-}
+fun({status: PaymentStatus.Failed, data: {errorCode: 400, errorMessage: 'error'}} as IResponseSuccess | IResponseFailed);
