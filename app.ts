@@ -6,6 +6,7 @@ abstract class Logger {
     }
 }
 
+
 class MyLogger extends Logger {
     log(message: string): void {
         console.log(message);
