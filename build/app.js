@@ -1,16 +1,14 @@
 "use strict";
-class Logger {
-    printDate(date) {
-        this.log(date.toString());
+function test(a) {
+    return a;
+}
+class A {
+    test() {
+        return function () {
+        };
     }
 }
-class MyLogger extends Logger {
-    log(message) {
-        console.log(message);
-    }
-    logWithDate(message) {
-        this.printDate(new Date());
-        this.log(message);
-    }
+try {
 }
-new MyLogger().logWithDate('Hello, world!');
+catch (e) {
+}

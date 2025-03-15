@@ -1,21 +1,23 @@
-abstract class Logger {
-    abstract log(message: string): void;
+function test(a: number): number {
+    return a;
+}
 
-    printDate(date: Date): void {
-        this.log(date.toString());
+type strOrFunc = (a: number | string) => number;
+// let f: strOrFunc = test;
+// test.apply(undefined, [1,3]);
+
+class A {
+    b: number;
+
+    test() {
+        return function () {
+            // this.b = 1;
+        }
     }
 }
 
+try {
 
-class MyLogger extends Logger {
-    log(message: string): void {
-        console.log(message);
-    }
-
-    logWithDate(message: string): void {
-        this.printDate(new Date());
-        this.log(message);
-    }
+} catch(e) {
+    // console.log(e.message);
 }
-
-new MyLogger().logWithDate('Hello, world!');

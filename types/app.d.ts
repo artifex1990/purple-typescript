@@ -1,8 +1,6 @@
-declare abstract class Logger {
-    abstract log(message: string): void;
-    printDate(date: Date): void;
-}
-declare class MyLogger extends Logger {
-    log(message: string): void;
-    logWithDate(message: string): void;
+declare function test(a: number): number;
+type strOrFunc = (a: number | string) => number;
+declare class A {
+    b: number;
+    test(): () => void;
 }
