@@ -1,20 +1,20 @@
 abstract class Logger {
     abstract log(message: string): void;
 
-    printDate(message: string): void {
-        this.log(`${new Date().toString()}: ${message}`);
+    printDate(date: Date): void {
+        this.log(date.toString());
     }
 }
 
-class ConsoleLogger extends Logger {
+class MyLogger extends Logger {
     log(message: string): void {
         console.log(message);
     }
 
-    logWithDate(date: Date, message: string): void {
-        console.log(date);
-        this.printDate(message);
+    logWithDate(message: string): void {
+        this.printDate(new Date());
+        this.log(message);
     }
 }
 
-new ConsoleLogger().logWithDate(new Date(), 'Hello World');
+new MyLogger().logWithDate('Hello, world!');
