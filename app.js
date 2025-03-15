@@ -1,31 +1,102 @@
 "use strict";
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var _Vehicle_price;
-class Vehicle {
+class Cart {
     constructor() {
-        _Vehicle_price.set(this, void 0);
+        this.products = [];
     }
-    set model(m) {
-        this._model = m;
-        __classPrivateFieldSet(this, _Vehicle_price, 100, "f");
+    hasProductToCart(id) {
+        return this.products.find(p => p.id === id) !== undefined;
     }
-    get model() {
-        return this._model;
+    addProduct(product) {
+        if (this.hasProductToCart(product.id)) {
+            return;
+        }
+        this.products.push(product);
     }
-    addDamage(damage) {
-        this.damages.push(damage);
+    deleteProduct(id) {
+        this.products = this.products.filter(p => p.id !== id);
+    }
+    calculateTotal() {
+        return this.products.reduce((total, p) => total + p.price, 0);
+    }
+    set delivery(delivery) {
+        this._delivery = delivery;
+    }
+    get delivery() {
+        return this._delivery;
+    }
+    checkout() {
+        return this.delivery !== undefined && this.products.length !== 0;
     }
 }
-_Vehicle_price = new WeakMap();
-class EuroTruck extends Vehicle {
-    setRun(km) {
-        this.run = km / 0.62;
+class Product {
+    constructor(id, title, price) {
+        this._id = id;
+        this._title = title;
+        this._price = price;
+    }
+    get id() {
+        return this._id;
+    }
+    get title() {
+        return this._title;
+    }
+    set title(title) {
+        this._title = title;
+    }
+    get price() {
+        return this._price;
+    }
+    set price(price) {
+        this._price = price;
     }
 }
-new Vehicle().make = 'Ford';
-new EuroTruck();
+class Delivery {
+    constructor(date) {
+        this._date = date;
+    }
+    get date() {
+        return this._date;
+    }
+    set date(date) {
+        this._date = date;
+    }
+}
+class DeliveryHome extends Delivery {
+    constructor(date, address) {
+        super(date);
+        this._address = address;
+    }
+    get address() {
+        return this._address;
+    }
+    set address(address) {
+        this._address = address;
+    }
+}
+class DeliveryPvz extends Delivery {
+    constructor(idPvz) {
+        super(new Date());
+        this._idPvz = idPvz;
+    }
+    get idPvz() {
+        return this._idPvz;
+    }
+    set idPvz(idPvz) {
+        this._idPvz = idPvz;
+    }
+}
+const product1 = new Product(1, "Iphone", 1000);
+const product2 = new Product(2, "Samsung", 1200);
+const cart = new Cart();
+const deliveryHome = new DeliveryHome(new Date(), "Moscow");
+const deliveryPvz = new DeliveryPvz(1);
+console.log(cart.checkout());
+cart.addProduct(product1);
+cart.addProduct(product2);
+console.log(cart);
+console.log(cart.calculateTotal());
+cart.delivery = deliveryHome;
+console.log(cart);
+cart.deleteProduct(2);
+console.log(cart);
+console.log(cart.checkout());
