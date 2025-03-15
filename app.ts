@@ -1,18 +1,20 @@
-abstract class Controller {
-    abstract handle(req: any): void;
+abstract class Logger {
+    abstract log(message: string): void;
 
-    handleWithLogs(req: any) {
-        console.log('start');
-        this.handle(req);
-        console.log('end');
+    printDate(message: string): void {
+        this.log(`${new Date().toString()}: ${message}`);
     }
 }
 
-class UserController extends Controller {
-    handle(req: any): void {
-        console.log(req);
+class ConsoleLogger extends Logger {
+    log(message: string): void {
+        console.log(message);
+    }
+
+    logWithDate(date: Date, message: string): void {
+        console.log(date);
+        this.printDate(message);
     }
 }
 
-const c = new UserController();
-c.handleWithLogs('test');
+new ConsoleLogger().logWithDate(new Date(), 'Hello World');
