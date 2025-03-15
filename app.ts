@@ -1,23 +1,32 @@
-class UserService {
-    //static name: string = 'afda'; нельзя использовать конфликт со встроенным свойством name
-    private static db: any;
+class Payment {
+    private date: Date = new Date();
 
-    constructor(public id: number) {}
-
-    static getUser(id: number) {
-        return UserService.db.findById(id);
+    getDate(this: Payment) {
+        return this.date;
     }
 
-    create() {
-        UserService.db;
-    }
-
-    static {
-        // асинхронные операции не разрешены
-        UserService.db = `new Database()`;
+    getDateArrow = () => {
+        return this.date;
     }
 }
 
-UserService.getUser(1);
-const inst = new UserService(1);
-inst.create();
+
+const p = new Payment();
+
+const user = {
+    id: 1,
+    paymentDate: p.getDate.bind(p),
+    paymentDateArrow: p.getDateArrow
+}
+
+// console.log(p.getDate());
+// console.log(user.paymentDate());
+// console.log(user.paymentDateArrow());
+
+class PaymentPersistent extends Payment {
+    save() {
+        return this.getDateArrow();
+    }
+}
+
+console.log(new PaymentPersistent().save());
